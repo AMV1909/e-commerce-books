@@ -1,53 +1,54 @@
-# Prueba técnica para el cargo de Freelance Backend Developer
+# Technical test for the position of Freelance Backend Developer at AID FOR AIDS
 
-## Introducción
+## Introduction
 
-Este es un repositorio que contiene el código fuente de una prueba técnica para el cargo de Freelance Backend Developer en la empresa [AID FOR AIDS](https://www.aidforaidscolombia.org/quienes-somos/).
+This is a repository that contains the source code of a technical test for the position of Freelance Backend Developer at [AID FOR AIDS](https://www.aidforaidscolombia.org/quienes-somos/).
 
-## Herramientas utilizadas
+## Technologies Used
 
-Para el desarrollo de esta prueba técnica se utilizaron las siguientes herramientas:
+For the development of this technical test the following tools were used:
 
--   [Express](https://expressjs.com/es/): Framework de Node.js para el desarrollo de aplicaciones web.
--   [MongoDB](https://www.mongodb.com/es): Base de datos NoSQL.
--   [Mongoose](https://mongoosejs.com/): Librería de Node.js para el modelado de objetos de MongoDB.
--   [Jsonwebtoken](https://jwt.io/): Librería de Node.js para la generación de tokens de autenticación.
--   [Cloudinary](https://cloudinary.com/): Servicio de almacenamiento de imágenes en la nube.
--   [Jest](https://jestjs.io/): Framework de pruebas para JavaScript.
--   [Supertest](https://www.npmjs.com/package/supertest): Librería de Node.js para realizar pruebas HTTP.
+-   [Express](https://expressjs.com/): Node.js framework for web application development.
+-   [Zod](https://zod.dev): TypeScript-first schema declaration and validation library.
+-   [MongoDB](https://www.mongodb.com/es): NoSQL database.
+-   [Mongoose](https://mongoosejs.com/): Node.js library for modeling MongoDB objects.
+-   [Jsonwebtoken](https://jwt.io/): Node.js library for generating authentication tokens.
+-   [Cloudinary](https://cloudinary.com/): Cloud image storage service.
+-   [Jest](https://jestjs.io/): JavaScript testing framework.
+-   [Supertest](https://www.npmjs.com/package/supertest): Node.js library for performing HTTP tests.
 
-## Instalación
+## Installation
 
-Para instalar este proyecto en su computador, siga los siguientes pasos:
+For install this project in your computer, follow the next steps:
 
-1. Clone este repositorio en su computador.
-2. Instale las dependencias del proyecto con el comando `npm install` o `npm i`.
-3. Cree un archivo `.env` en la raíz del proyecto y agregue las siguientes variables de entorno:
+1. Clone this repository in your computer.
+2. Install the project dependencies with the command `npm install` or `npm i`.
+3. Create a `.env` file in the root of the project and add the following environment variables:
 
 ```
-# Puede cambiar el valor de estas variables de entorno si lo desea
+# You can change the value of these environment variables if you want
 
-# Puerto en el que se ejecutará el servidor
-PORT=3000
+# Port on which the server will run
+PORT = 3000
 
-# URL de la base de datos de MongoDB
+# URL of the MongoDB database
 MONGODB_URI = "mongodb://localhost:27017/prueba-tecnica"
 MONGODB_URI_TEST = "mongodb://localhost:27017/prueba-tecnica-test"
 
-# Key secreta para la generación de tokens de autenticación
+# Secret key for generating authentication tokens
 SECRET_KEY = "rKLumpH92V3"
 
-# Si no cuenta con una cuenta de Cloudinary, puede utilizar la siguiente información
+# If you do not have a Cloudinary account, you can use the following information
 CLOUDINARY_CLOUD_NAME = "dcqoxtpxj"
 CLOUDINARY_API_KEY = "636712958952759"
 CLOUDINARY_API_SECRET = "nRG9vh_ZDRtTuEuS0HUI6RXs5Lc"
 ```
 
-## Ejecución
+## Execution
 
-Comandos disponibles:
+Commands available:
 
--   `npm start`: Ejecuta el servidor en modo de producción.
--   `npm run dev`: Ejecuta el servidor en modo de desarrollo.
--   `npm run test`: Ejecuta las pruebas unitarias.
--   `npm run time`: Ver el tiempo de desarrollo del proyecto.
+-   `npm start`: Runs the server in production mode.
+-   `npm run dev`: Runs the server in development mode.
+-   `npm run test`: Runs the unit tests.
+-   `npm run time`: See the development time of the project.

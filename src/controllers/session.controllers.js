@@ -2,21 +2,24 @@ import { createHash } from "crypto";
 
 import { user } from "../models/user.js";
 import { generateToken } from "../jwt/jwt.js";
+import { validateUser, validateUserLogin } from "../schemas/user.schema.js";
 
 // Login
 export const login = async (req, res) => {
-    // Check if the fields are empty
-    if (!req.body.email || !req.body.password)
-        return res.status(400).json({ message: "Missing fields" });
+    // Validate the fields
+    const result = validateUserLogin(req.body);
+
+    // If the fields are invalid, return an error
+    if (!result.success) return res.status(400).json(result.error);
 
     // Encrypt the password
-    req.body.password = createHash("sha256")
-        .update(req.body.password)
+    result.data.password = createHash("sha256")
+        .update(result.data.password)
         .digest("base64");
 
     // Find a user with the email and password provided
     await user
-        .findOne({ email: req.body.email, password: req.body.password })
+        .findOne(result.data)
         .then((user) => {
             // If there is no user, return an error
             if (!user)
@@ -33,23 +36,21 @@ export const login = async (req, res) => {
 
 // Register
 export const register = async (req, res) => {
-    // Check if the fields are empty
-    if (!req.body.name || !req.body.email || !req.body.password)
-        return res.status(400).json({ message: "Missing fields" });
+    // Validate the fields
+    const result = validateUser(req.body);
+
+    // If the fields are invalid, return an error
+    if (!result.success) return res.status(400).json(result.error);
 
     // Encrypt the password
-    req.body.password = createHash("sha256")
-        .update(req.body.password)
+    result.data.password = createHash("sha256")
+        .update(result.data.password)
         .digest("base64");
 
     // Create the user
     // If the email already exists, return an error
     await user
-        .create({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-        })
+        .create(result.data)
         .then((user) => res.status(201).json({ user }))
         .catch((err) =>
             res.status(400).json({ message: "Email already exists" })

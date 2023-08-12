@@ -3,6 +3,7 @@ import request from "supertest";
 import { app } from "../src/app.js";
 import { user } from "../src/models/user.js";
 import { product } from "../src/models/product.js";
+import { validateProductCart } from "../src/schemas/productCart.schema.js";
 
 import "../src/database/db.js";
 
@@ -55,8 +56,10 @@ describe("POST /productsCart", () => {
                 .set("x-access-token", token)
                 .send({});
 
+            const result = validateProductCart({});
+
             expect(response.statusCode).toBe(400);
-            expect(response.body.message).toBe("Missing fields");
+            expect(response.body.issues).toEqual(result.error.issues);
         });
     });
 

@@ -2,21 +2,24 @@ import fs from "fs-extra";
 
 import { user } from "../models/user.js";
 import { deleteImage, uploadImage } from "../libs/cloudinary.js";
+import { validateUserUpdateAddress } from "../schemas/user.schema.js";
 
 // Update user address
 // This function can be used for adding if the user doesn't have an address
 // or updating if the user already has an address
 export const updateAddress = async (req, res) => {
-    // Check if the fields are empty
-    if (!req.body.address)
-        return res.status(400).json({ message: "Missing fields" });
+    // Validate fields
+    const result = validateUserUpdateAddress(req.body);
+
+    // If there are errors, return status 400
+    if (result.error) return res.status(400).json(result.error);
 
     // Update the address
     // The _id comes from the token decoded in the middleware
     await user
         .findOneAndUpdate(
             { _id: req.decoded._id },
-            { $set: { address: req.body.address } },
+            { $set: { address: result.data.address } },
             { new: true }
         )
         .then((user) => res.status(200).json({ user }))
@@ -28,8 +31,10 @@ export const updateAddress = async (req, res) => {
 // or updating if the user already has a profile picture
 export const updateProfilePicture = async (req, res) => {
     // Check if the fields are empty
-    if (!req.files)
-        return res.status(400).json({ message: "Missing files" });
+    if (!req.files || !req.files.profilePicture)
+        return res
+            .status(400)
+            .json({ message: "Profile picture field is empty" });
 
     // Update the profile picture
     // The _id comes from the token decoded in the middleware

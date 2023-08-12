@@ -6,8 +6,6 @@ import { generateToken } from "../src/jwt/jwt.js";
 
 import "../src/database/db.js";
 import {
-    validateProduct,
-    validateProductUpdate,
     validateStock,
     validateTypeProduct,
 } from "../src/schemas/product.schema.js";

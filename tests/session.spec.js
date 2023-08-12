@@ -5,6 +5,7 @@ import { app } from "../src/app.js";
 import { user } from "../src/models/user.js";
 
 import "../src/database/db.js";
+import { validateUser, validateUserLogin } from "../src/schemas/user.schema.js";
 
 let test = {
     name: "Test",
@@ -19,8 +20,10 @@ describe("POST /users/register", () => {
                 .post("/api/users/register")
                 .send({});
 
+            const result = validateUser({});
+
             expect(response.statusCode).toBe(400);
-            expect(response.body.message).toBe("Missing fields");
+            expect(response.body.issues).toEqual(result.error.issues);
         });
     });
 
@@ -64,8 +67,10 @@ describe("POST /users/login", () => {
                 .post("/api/users/login")
                 .send({});
 
+            const result = validateUserLogin({});
+
             expect(response.statusCode).toBe(400);
-            expect(response.body.message).toBe("Missing fields");
+            expect(response.body.issues).toEqual(result.error.issues);
         });
     });
 
@@ -73,7 +78,7 @@ describe("POST /users/login", () => {
         it("Should return status 404", async () => {
             const response = await request(app)
                 .post("/api/users/login")
-                .send({ email: "a", password: "b" });
+                .send({ email: "a@gmail.com", password: "abcdefghiklm" });
 
             expect(response.statusCode).toBe(404);
             expect(response.body.message).toBe("Invalid credentials");

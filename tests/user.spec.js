@@ -4,6 +4,7 @@ import { app } from "../src/app.js";
 import { user } from "../src/models/user.js";
 
 import "../src/database/db.js";
+import { validateUserUpdateAddress } from "../src/schemas/user.schema.js";
 
 const test = {
     name: "Test",
@@ -28,8 +29,10 @@ describe("PUT /users/:id", () => {
                     .set("x-access-token", token)
                     .send({});
 
+                const result = validateUserUpdateAddress({});
+
                 expect(response.statusCode).toBe(400);
-                expect(response.body.message).toBe("Missing fields");
+                expect(response.body.issues).toEqual(result.error.issues);
             });
         });
 
@@ -76,7 +79,9 @@ describe("PUT /users/:id", () => {
                     .set("x-access-token", token);
 
                 expect(response.statusCode).toBe(400);
-                expect(response.body.message).toBe("Missing files");
+                expect(response.body.message).toBe(
+                    "Profile picture field is empty"
+                );
             });
         });
 
